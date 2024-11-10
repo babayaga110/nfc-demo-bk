@@ -1,8 +1,8 @@
 import * as React from "react";
 import Upload from "../assets/Upload";
-import {  ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase/config";
-export default function Navbar() {
+export default function Navbar({handleFileChange}) {
   const fileInputRef = React.useRef(null);
 
   // Function to handle button click and trigger the file input
@@ -10,22 +10,7 @@ export default function Navbar() {
     fileInputRef.current.click();
   };
 
-  // Function to handle file selection
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const mountainsRef = ref(storage, `images/${file.name}`);
-      uploadBytes(mountainsRef, file)
-        .then((snapshot) => {
-          console.log("Uploaded a blob or file!", snapshot);
-          alert("File uploaded successfully!");
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-          alert("Failed to upload file.");
-        });
-    }
-  };
+ 
   return (
     <div className="bg-gray-100 text-white p-3 flex justify-between items-center">
       <h4 className="text-gray-800 font-bold">Admin Panel</h4>
@@ -38,7 +23,7 @@ export default function Navbar() {
       <input
         type="file"
         ref={fileInputRef}
-        onChange={handleFileChange}
+        onChange={(e) => handleFileChange(e.target.files[0])}
         style={{ display: "none" }}
       />
     </div>
