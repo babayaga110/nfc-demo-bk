@@ -1,11 +1,7 @@
 import * as React from "react";
 import Plus from "../assets/Plus";
 import Delete from "../assets/Delete";
-import { doc, updateDoc } from "firebase/firestore";
-import { db_firestore, storage } from "../firebase/config";
-import { deleteObject, ref } from "firebase/storage";
 
-const docPath = doc(db_firestore, "demo", "E8MUqjXy0V3Otj4Nrz2n");
 
 export default function Card({ url, name ,handleSet, handleDelete}) {
 

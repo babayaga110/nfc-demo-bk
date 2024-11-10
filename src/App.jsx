@@ -2,17 +2,16 @@ import * as React from "react";
 import "./App.css";
 import Card from "./components/Card";
 import Navbar from "./components/Navbar";
-import { storage } from "./firebase/config";
+import { storage ,db_firestore} from "./firebase/config";
 import { getDownloadURL, listAll, ref, deleteObject, uploadBytes } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
-import { db_firestore } from "./firebase/config";
+
 
 const docPath = doc(db_firestore, "demo", "E8MUqjXy0V3Otj4Nrz2n");
 
 function App() {
   const [images, setImages] = React.useState([]);
 
-  // Fetch images from storage
   const fetchImages = async () => {
     try {
       const listRef = ref(storage, "images");
