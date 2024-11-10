@@ -24,7 +24,7 @@ export default function Card({ url, name ,handleSet, handleDelete,handleReset}) 
 
   return (
     <div className="flex w-[300px] border border-gray-300 rounded-md shadow-sm overflow-hidden">
-      <img src={url} alt={name} className="object-cover w-[200px] h-[150px] rounded-l-md" />
+      <img src={url} alt={name} className="object-contain w-[200px] h-[150px] rounded-l-md" />
       <div className="flex flex-col flex-1">
         {data?.nfcToken === url ? ( <button
           className="bg-blue-500 hover:bg-blue-700 text-white flex justify-center items-center flex-1"
