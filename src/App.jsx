@@ -2,10 +2,15 @@ import * as React from "react";
 import "./App.css";
 import Card from "./components/Card";
 import Navbar from "./components/Navbar";
-import { storage ,db_firestore} from "./firebase/config";
-import { getDownloadURL, listAll, ref, deleteObject, uploadBytes } from "firebase/storage";
+import { storage, db_firestore } from "./firebase/config";
+import {
+  getDownloadURL,
+  listAll,
+  ref,
+  deleteObject,
+  uploadBytes,
+} from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
-
 
 const docPath = doc(db_firestore, "demo", "E8MUqjXy0V3Otj4Nrz2n");
 
@@ -16,7 +21,7 @@ function App() {
     try {
       const listRef = ref(storage, "images");
       const res = await listAll(listRef);
-      
+
       const imagePromises = res.items.map(async (itemRef) => {
         const url = await getDownloadURL(itemRef);
         return { url, name: itemRef.name };
@@ -44,12 +49,24 @@ function App() {
     }
   };
 
+  const handleReset = async () => {
+    try {
+      await updateDoc(docPath, { nfcToken: "" });
+      alert("URL reset successfully!");
+    } catch (error) {
+      console.error("Error setting URL:", error);
+      alert("Failed to set URL.");
+    }
+  };
+
   const handleDelete = async (name) => {
     const desertRef = ref(storage, `images/${name}`);
     try {
       await deleteObject(desertRef);
       alert("File deleted successfully!");
-      setImages((prevImages) => prevImages.filter((image) => image.name !== name));
+      setImages((prevImages) =>
+        prevImages.filter((image) => image.name !== name)
+      );
       await updateDoc(docPath, { nfcToken: "" });
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -63,7 +80,7 @@ function App() {
       try {
         await uploadBytes(mountainsRef, file);
         alert("File uploaded successfully!");
-        fetchImages();  // Fetch updated list after upload
+        fetchImages(); // Fetch updated list after upload
       } catch (error) {
         console.error("Error uploading file:", error);
         alert("Failed to upload file.");
@@ -74,14 +91,15 @@ function App() {
   return (
     <div>
       <Navbar handleFileChange={handleFileChange} />
-      <div className="flex flex-col gap-2 mt-2">
+      <div className="flex flex-col gap-2 mt-2 px-2">
         {images.map((image) => (
-          <Card 
-            key={image.name} 
-            url={image.url} 
-            name={image.name} 
-            handleDelete={handleDelete} 
-            handleSet={handleSet} 
+          <Card
+            key={image.name}
+            url={image.url}
+            name={image.name}
+            handleDelete={handleDelete}
+            handleSet={handleSet}
+            handleReset={handleReset} 
           />
         ))}
       </div>
