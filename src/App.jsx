@@ -42,20 +42,20 @@ function App() {
   const handleSet = async (url) => {
     try {
       await updateDoc(docPath, { nfcToken: url });
-      alert("URL set successfully!");
+      alert("NFC read successfully!");
     } catch (error) {
-      console.error("Error setting URL:", error);
-      alert("Failed to set URL.");
+      console.error("Error setting NFC:", error);
+      alert("Failed to set NFC.");
     }
   };
 
   const handleReset = async () => {
     try {
       await updateDoc(docPath, { nfcToken: "" });
-      alert("URL reset successfully!");
+      alert("NFC close successfully!");
     } catch (error) {
-      console.error("Error setting URL:", error);
-      alert("Failed to set URL.");
+      console.error("Error setting NFC:", error);
+      alert("Failed to set NFC.");
     }
   };
 
