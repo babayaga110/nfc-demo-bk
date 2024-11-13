@@ -34,6 +34,8 @@ function App() {
     }
   };
 
+
+
   // Call fetchImages on component mount
   React.useEffect(() => {
     fetchImages();
@@ -87,6 +89,15 @@ function App() {
       }
     }
   };
+  const handleAvailable = async (data) => {
+    try {
+      await updateDoc(docPath, { available:  data});
+      alert(`Doctor ${data ? 'available' : 'unavailable'} successfully!`);
+    } catch (error) {
+      console.error("Error setting NFC:", error);
+      alert("Failed to set NFC.");
+    }
+  }
 
   return (
     <div>
@@ -100,6 +111,7 @@ function App() {
             handleDelete={handleDelete}
             handleSet={handleSet}
             handleReset={handleReset} 
+            handleAvailable={handleAvailable}
           />
         ))}
       </div>
