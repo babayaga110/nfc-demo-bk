@@ -12,14 +12,14 @@ export default function Template({
         />
         <div className="w-full px-1">
           <h4 className="font-semibold text-gray-600 text-sm">
-            {doctor?.name?.en}
+            {doctor?.inpurName}
           </h4>
           <h4 className="font-semibold text-gray-600 text-sm">
             {doctor?.name?.ar}
           </h4>
           <hr className="w-full border-1 border-gray-300 mb-2 " />
           <p className="font-normal text-gray-400 text-sm">
-            {doctor?.designation?.en}
+            {doctor?.inputDesc}
           </p>
           <p className="font-normal text-gray-400 text-sm">
             {doctor?.designation?.ar}
