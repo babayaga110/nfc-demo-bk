@@ -11,20 +11,17 @@ export default function Template({
           className="w-full h-auto object-contain "
         />
         <div className="w-full px-1">
-          <h5 className="text-sm text-gray-400 mb-1 ">
-            Information
-          </h5>
-          <hr className="w-full border-1 border-gray-300 mb-2 " />
           <h4 className="font-semibold text-gray-600 text-sm">
             {doctor?.name?.en}
           </h4>
           <h4 className="font-semibold text-gray-600 text-sm">
             {doctor?.name?.ar}
           </h4>
-          <p className="font-medium text-gray-400 text-sm">
+          <hr className="w-full border-1 border-gray-300 mb-2 " />
+          <p className="font-normal text-gray-400 text-sm">
             {doctor?.designation?.en}
           </p>
-          <p className="font-medium text-gray-400 text-sm">
+          <p className="font-normal text-gray-400 text-sm">
             {doctor?.designation?.ar}
           </p>
         </div>
