@@ -2,7 +2,7 @@ import * as React from "react";
 import { useModal } from "../useContext/ModalContext";
 import Modal from "./Modal";
 import { useForm } from "react-hook-form";
-export default function Navbar({  handleDoctor }) {
+export default function Navbar({  handleDoctor ,loading}) {
   const fileInputRef = React.useRef(null);
   const { openModal } = useModal();
   const {
@@ -10,7 +10,15 @@ export default function Navbar({  handleDoctor }) {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm(
+    {
+      defaultValues: {
+        name: "",
+        designation: "",
+        image: "",
+      },
+    }
+  );
 
   const onSubmit = (data) => {
     handleDoctor(data);
@@ -66,8 +74,9 @@ export default function Navbar({  handleDoctor }) {
           <button
             className="bg-gray-500 hover:bg-gray-700 text-white px-3 p-1 rounded"
             type="submit"
+            disabled={loading}
           >
-            Add Doctor
+            {loading ? "Loading..." : "Add Doctor"}
           </button>
         </form>
       </Modal>

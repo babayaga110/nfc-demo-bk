@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import { storage, db_firestore } from "./firebase/config";
 import {
   getDownloadURL,
-  listAll,
   ref,
   deleteObject,
   uploadBytes,
@@ -17,31 +16,30 @@ import {
   collection,
   getDocs,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { useModal } from "./useContext/ModalContext";
 
 const docPath = doc(db_firestore, "demo", "E8MUqjXy0V3Otj4Nrz2n");
 
 function App() {
-  const [images, setImages] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
   const [doctors, setDoctors] = React.useState([]);
   const { closeModal } = useModal();
 
-  const fetchDoctors = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db_firestore, "doctors"));
-      const doctors = querySnapshot.docs.map((doc) => doc.data());
-      setDoctors(doctors);
-      console.log(doctors);
-    } catch (error) {
-      console.error("Error fetching doctors:", error);
-      alert("Failed to fetch doctors.");
-    }
-  };
-
-  // Call fetchImages on component mount
   React.useEffect(() => {
-    fetchDoctors();
+    const unsubscribe = onSnapshot(
+      collection(db_firestore, "doctors"),
+      (snapshot) => {
+        const doctors = snapshot.docs.map((doc) => ({
+          id: doc.id,
+
+          ...doc.data(),
+        }));
+        setDoctors(doctors);
+      }
+    );
+    return () => unsubscribe();
   }, []);
 
   const handleSet = async (data) => {
@@ -97,6 +95,7 @@ function App() {
   };
 
   const handleDoctor = async (data) => {
+    setLoading(true);
     const file = data.image[0];
     const mountainsRef = ref(storage, `doctors/${file.name}`);
 
@@ -124,14 +123,14 @@ function App() {
       console.error("Error adding doctor:", error);
       alert("Failed to add doctor.");
     } finally {
+      setLoading(false);
       closeModal();
-      fetchDoctors();
     }
   };
 
   return (
     <div>
-      <Navbar handleDoctor={handleDoctor} />
+      <Navbar handleDoctor={handleDoctor} loading={loading} />
       <div className="flex flex-col gap-2 mt-2 px-2">
         {doctors.map((doctor) => (
           <Card
