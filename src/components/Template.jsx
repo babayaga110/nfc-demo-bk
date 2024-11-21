@@ -12,7 +12,7 @@ export default function Template({
         />
         <div className="w-full px-1">
           <h4 className="font-semibold text-gray-600 text-sm">
-            {doctor?.inpurName}
+            {doctor?.inputName}
           </h4>
           <h4 className="font-semibold text-gray-600 text-sm">
             {doctor?.name?.ar}
