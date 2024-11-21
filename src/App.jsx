@@ -47,6 +47,7 @@ function App() {
       await updateDoc(docPath, {
         ...data,
         available: true,
+        show: true,
       });
       alert("NFC read successfully!");
     } catch (error) {
@@ -58,10 +59,7 @@ function App() {
   const handleReset = async () => {
     try {
       await updateDoc(docPath, { 
-        name: "",
-        designation: "",
-        image: "",
-        available: false,
+        show: false
        });
       alert("NFC close successfully!");
     } catch (error) {
