@@ -34,7 +34,7 @@ export default function Card({
         <Template doctor={doctor} />
       </div>
       <div className="flex flex-col w-1/4">
-        {data?.image === doctor?.image ? (
+        {data?.show ? (
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white flex justify-center items-center flex-1"
             onClick={() => handleReset(doctor)}
@@ -49,7 +49,7 @@ export default function Card({
             <Plus />
           </button>
         )}
-        {data?.image === doctor?.image ? (
+        {data?.show ? (
           <label class="inline-flex items-center cursor-pointer flex-1 w-[100%]">
             <input
               type="checkbox"
