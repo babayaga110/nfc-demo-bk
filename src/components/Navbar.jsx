@@ -9,6 +9,7 @@ export default function Navbar({  handleDoctor ,loading}) {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm(
     {
@@ -22,6 +23,7 @@ export default function Navbar({  handleDoctor ,loading}) {
 
   const onSubmit = (data) => {
     handleDoctor(data);
+    reset();
   };
 
   // Function to handle button click and trigger the file input
